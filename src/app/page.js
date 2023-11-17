@@ -1,95 +1,103 @@
-import Image from 'next/image'
-import styles from './page.module.css'
+"use client";
+
+import Image from "next/image";
+import styles from "./page.module.css";
+import { CldVideoPlayer } from "next-cloudinary";
+import Gallery from "./components/Gallery.js";
+import "next-cloudinary/dist/cld-video-player.css";
+import { Cloudinary } from "@cloudinary/url-gen";
+
+import { AdvancedImage } from "@cloudinary/react";
+import { AdvancedVideo } from "@cloudinary/react";
+// Import required actions and qualifiers.
+import { fill } from "@cloudinary/url-gen/actions/resize";
+import { byRadius } from "@cloudinary/url-gen/actions/roundCorners";
+import { FocusOn } from "@cloudinary/url-gen/qualifiers/focusOn";
+import { Gravity } from "@cloudinary/url-gen/qualifiers";
+import { AutoFocus } from "@cloudinary/url-gen/qualifiers/autoFocus";
 
 export default function Home() {
-  return (
-    <main className={styles.main}>
-      <div className={styles.description}>
-        <p>
-          Get started by editing&nbsp;
-          <code className={styles.code}>src/app/page.js</code>
-        </p>
-        <div>
-          <a
-            href="https://vercel.com?utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            By{' '}
-            <Image
-              src="/vercel.svg"
-              alt="Vercel Logo"
-              className={styles.vercelLogo}
-              width={100}
-              height={24}
-              priority
-            />
-          </a>
-        </div>
-      </div>
+  const cld = new Cloudinary({
+    cloud: {
+      cloudName: "dnuabur2f",
+    },
+  });
 
-      <div className={styles.center}>
-        <Image
-          className={styles.logo}
-          src="/next.svg"
-          alt="Next.js Logo"
-          width={180}
-          height={37}
-          priority
+  const myImage = cld.image("cld-sample-4");
+  const vid = cld.video("video_upload_example");
+
+  // Apply the transformation.
+  vid.resize(fill().width(270).height(200)); //.roundCorners(byRadius(20)); // Round the corners.
+
+  // Resize to 250 x 250 pixels using the 'fill' crop mode.
+  myImage.resize(fill().width(250).height(250));
+
+  return (
+    <main>
+      <Image
+        src="/coursecast_logo2.png"
+        width={400}
+        height={100}
+        alt="logo"
+        className={styles.logo}
+      ></Image>
+      <h1 className={styles.title}>View your content</h1>
+      <div className={styles.gridContainer}>
+        <AdvancedVideo
+          className={styles.videoItem}
+          cldVid={vid}
+          cldPoster="auto"
+          controls
+        />
+        <AdvancedVideo
+          className={styles.videoItem}
+          cldVid={vid}
+          cldPoster="auto"
+          controls
+        />
+        <AdvancedVideo
+          className={styles.videoItem}
+          cldVid={vid}
+          cldPoster="auto"
+          controls
+        />
+        <AdvancedVideo
+          className={styles.videoItem}
+          cldVid={vid}
+          cldPoster="auto"
+          controls
+        />
+        <AdvancedVideo
+          className={styles.videoItem}
+          cldVid={vid}
+          cldPoster="auto"
+          controls
+        />
+        <AdvancedVideo
+          className={styles.videoItem}
+          cldVid={vid}
+          cldPoster="auto"
+          controls
+        />
+        <AdvancedVideo
+          className={styles.videoItem}
+          cldVid={vid}
+          cldPoster="auto"
+          controls
+        />
+        <AdvancedVideo
+          className={styles.videoItem}
+          cldVid={vid}
+          cldPoster="auto"
+          controls
+        />
+        <AdvancedVideo
+          className={styles.videoItem}
+          cldVid={vid}
+          cldPoster="auto"
+          controls
         />
       </div>
-
-      <div className={styles.grid}>
-        <a
-          href="https://nextjs.org/docs?utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-          className={styles.card}
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <h2>
-            Docs <span>-&gt;</span>
-          </h2>
-          <p>Find in-depth information about Next.js features and API.</p>
-        </a>
-
-        <a
-          href="https://nextjs.org/learn?utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-          className={styles.card}
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <h2>
-            Learn <span>-&gt;</span>
-          </h2>
-          <p>Learn about Next.js in an interactive course with&nbsp;quizzes!</p>
-        </a>
-
-        <a
-          href="https://vercel.com/templates?framework=next.js&utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-          className={styles.card}
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <h2>
-            Templates <span>-&gt;</span>
-          </h2>
-          <p>Explore starter templates for Next.js.</p>
-        </a>
-
-        <a
-          href="https://vercel.com/new?utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-          className={styles.card}
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <h2>
-            Deploy <span>-&gt;</span>
-          </h2>
-          <p>
-            Instantly deploy your Next.js site to a shareable URL with Vercel.
-          </p>
-        </a>
-      </div>
     </main>
-  )
+  );
 }
