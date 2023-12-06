@@ -9,7 +9,7 @@
 
 .gridContainer {
   display: grid;
-  grid-template-columns: repeat(3, 1fr);
+  grid-template-columns: repeat(2, 1fr);
   gap: 5%; /* Adjust the spacing as needed */
   padding: 0 10%; /* 20px padding on the left and right */
 }
