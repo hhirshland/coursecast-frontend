@@ -1,5 +1,6 @@
 "use client";
 import React, { useState, useEffect } from "react";
+import { useSearchParams } from "next/navigation";
 import Image from "next/image";
 import styles from "./page.module.css";
 import { CldVideoPlayer } from "next-cloudinary";
@@ -32,6 +33,10 @@ async function fetchVideos() {
 
 export default function Home() {
   const [videos, setVideos] = useState([]);
+  const searchParams = useSearchParams();
+  console.log(searchParams);
+  console.log(searchParams.get("group_id"));
+  const queryGroupId = searchParams.get("group_id");
   const cld = new Cloudinary({
     cloud: {
       cloudName: "dnuabur2f",
@@ -42,19 +47,22 @@ export default function Home() {
     async function loadVideos() {
       const fetchedVideos = await fetchVideos();
       let videosArray = [];
+
       for (const video of fetchedVideos) {
         let vid = cld
           .video(video.public_id)
           //.resize(fill().width(1080).height(720)) // Example of higher resolution
           .quality("auto:good"); // Adjust quality settings
         //.resize(fill().width(270).height(200));
-
-        videosArray.push(vid);
+        if (queryGroupId && queryGroupId == video.group_id) {
+          videosArray.push({ video: vid, group: video.group_id });
+        }
       }
+
       setVideos(videosArray);
     }
     loadVideos();
-  }, []); // The empty array ensures this effect runs only once on mount
+  }, [queryGroupId]); // The empty array ensures this effect runs only once on mount
 
   return (
     <main>
@@ -68,12 +76,15 @@ export default function Home() {
       <h1 className={styles.title}>View your content</h1>
       <div className={styles.gridContainer}>
         {videos.map((video, index) => (
-          <AdvancedVideo
-            className={styles.videoItem}
-            cldVid={video}
-            cldPoster="auto"
-            controls
-          />
+          <div>
+            <AdvancedVideo
+              className={styles.videoItem}
+              cldVid={video.video}
+              cldPoster="auto"
+              controls
+            />
+            <p>{video.group}</p>
+          </div>
         ))}
       </div>
     </main>
