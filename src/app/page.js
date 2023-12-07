@@ -56,6 +56,8 @@ export default function Home() {
         //.resize(fill().width(270).height(200));
         if (queryGroupId && queryGroupId == video.group_id) {
           videosArray.push({ video: vid, group: video.group_id });
+        } else {
+          videosArray.push({ video: vid, group: video.group_id });
         }
       }
 
