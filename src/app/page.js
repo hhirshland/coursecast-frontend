@@ -45,7 +45,9 @@ export default function Home() {
       for (const video of fetchedVideos) {
         let vid = cld
           .video(video.public_id)
-          .resize(fill().width(270).height(200));
+          //.resize(fill().width(1080).height(720)) // Example of higher resolution
+          .quality("auto:good"); // Adjust quality settings
+        //.resize(fill().width(270).height(200));
 
         videosArray.push(vid);
       }
