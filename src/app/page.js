@@ -20,15 +20,48 @@ import { AutoFocus } from "@cloudinary/url-gen/qualifiers/autoFocus";
 //Supabase initialization
 import { createClient } from "@supabase/supabase-js";
 
+const cld = new Cloudinary({
+  cloud: {
+    cloudName: "dnuabur2f",
+  },
+});
+
 const supabase = createClient(
   "https://ixbrsgekfioaizpwaogk.supabase.co",
   "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Iml4YnJzZ2VrZmlvYWl6cHdhb2drIiwicm9sZSI6ImFub24iLCJpYXQiOjE3MDE4MTY4ODcsImV4cCI6MjAxNzM5Mjg4N30.P_okRAnwioEqJjj2i2d_Gt7n_FZJwJRpyL60j3ywA4o"
 );
 
-async function fetchVideos() {
+//This function fetches videos from supabase and cloudinary, filtering based on the group_id parameter in the url (if present)
+async function fetchVideos(queryGroupId) {
   let { data: clips, error } = await supabase.from("clips").select("*");
   if (error) console.log(error);
-  return clips;
+
+  let videosArray = [];
+
+  //For every clip public_id stored in supabase, fetch the video from cloudinary and add it to the videosArray
+  for (const video of clips) {
+    let vid = cld
+      .video(video.public_id)
+      //.resize(fill().width(1080).height(720)) // Example of higher resolution
+      .quality("auto:good"); // Adjust quality settings
+    //If the group_id parameter is present in the url, only add videos with that group_id to the videosArray
+    if (queryGroupId && queryGroupId == video.group_id) {
+      videosArray.push({
+        video: vid,
+        group: video.group_id,
+        videoId: video.public_id,
+      });
+    }
+    //If group_id is not present in the url, add all videos to the videosArray
+    else if (!queryGroupId) {
+      videosArray.push({
+        video: vid,
+        group: video.group_id,
+        videoId: video.public_id,
+      });
+    }
+  }
+  return videosArray;
 }
 
 export default function Home() {
@@ -37,30 +70,11 @@ export default function Home() {
   console.log(searchParams);
   console.log(searchParams.get("group_id"));
   const queryGroupId = searchParams.get("group_id");
-  const cld = new Cloudinary({
-    cloud: {
-      cloudName: "dnuabur2f",
-    },
-  });
 
+  //Fetch videos from supabase/cloudinary
   useEffect(() => {
     async function loadVideos() {
-      const fetchedVideos = await fetchVideos();
-      let videosArray = [];
-
-      for (const video of fetchedVideos) {
-        let vid = cld
-          .video(video.public_id)
-          //.resize(fill().width(1080).height(720)) // Example of higher resolution
-          .quality("auto:good"); // Adjust quality settings
-        //.resize(fill().width(270).height(200));
-        if (queryGroupId && queryGroupId == video.group_id) {
-          videosArray.push({ video: vid, group: video.group_id });
-        } else {
-          videosArray.push({ video: vid, group: video.group_id });
-        }
-      }
-
+      const videosArray = await fetchVideos(queryGroupId);
       setVideos(videosArray);
     }
     loadVideos();
@@ -84,8 +98,8 @@ export default function Home() {
               cldVid={video.video}
               cldPoster="auto"
               controls
+              key={video.videoId}
             />
-            <p>{video.group}</p>
           </div>
         ))}
       </div>
