@@ -2,7 +2,7 @@
 import { CldVideoPlayer } from "next-cloudinary";
 import styles from ".././page.module.css";
 
-const Gallery = (videos) => {
+const Gallery = () => {
   return (
     <div className={styles.gridContainer}>
       {videos.map((video, index) => (
