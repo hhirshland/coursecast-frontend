@@ -18,6 +18,7 @@ export async function POST(request) {
   const raw1ImpactFrame = body.record.raw_1_impact_frame;
   const raw1ImpactTime = raw1ImpactFrame / 60; //60 FPS
   main(raw1PublicId, raw1ImpactTime);
+  Response.json({ message: "Clip should be getting generated!" });
 }
 
 //OLD CODE BELOW
