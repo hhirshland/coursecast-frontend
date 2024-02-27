@@ -1,4 +1,3 @@
-const functions = require("@google-cloud/functions-framework");
 const cloudinary = require("cloudinary").v2;
 cloudinary.config({
   cloud_name: "dnuabur2f",
