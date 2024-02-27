@@ -48,20 +48,15 @@ async function main(
   const htmlSnippet = cloudinary.video(raw1PublicId, {
     end_offset: raw1ImpactTime + 3,
     start_offset: raw1ImpactTime - 3,
-    transformation: [
-      {
-        //This transformation adds the logo overlay to the video (logo is stored in cloudinary, currently using pebble logo)
-        overlay: "psibwxeuh2c5wnnh8o4j", //"dthc1g5nfk0bl7cj0doo",
-        gravity: "north_east", // Position at top right
-        x: 50, // Margin from the right edge
-        y: 50, // Margin from the top edge
-        width: 500,
-        //height: 300,
-      },
-      {
-        overlay: "h1lwbct12rylznmjsv10",
-      },
-    ],
+    transformation: {
+      //This transformation adds the logo overlay to the video (logo is stored in cloudinary, currently using pebble logo)
+      overlay: "psibwxeuh2c5wnnh8o4j", //"dthc1g5nfk0bl7cj0doo",
+      gravity: "north_east", // Position at top right
+      x: 50, // Margin from the right edge
+      y: 50, // Margin from the top edge
+      width: 500,
+      //height: 300,
+    },
   });
 
   //music: h1lwbct12rylznmjsv10
