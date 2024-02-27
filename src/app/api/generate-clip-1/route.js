@@ -17,7 +17,11 @@ export async function POST(request) {
   const raw1PublicId = body.record.raw_1_public_id;
   const raw1ImpactFrame = body.record.raw_1_impact_frame;
   const raw1ImpactTime = raw1ImpactFrame / 60; //60 FPS
-  main(raw1PublicId, raw1ImpactTime);
+  const raw2PublicId = body.record.raw_2_public_id;
+  const raw2ImpactFrame = body.record.raw_2_impact_frame;
+  const raw2ImpactTime = raw2ImpactFrame / 60; //60 FPS
+
+  main(raw1PublicId, raw1ImpactTime, raw2PublicId, raw2ImpactTime);
   return Response.json({ message: "Clip should be getting generated!" });
 }
 
@@ -34,21 +38,33 @@ functions.http("generateClip", (req, res) => {
   main(raw1PublicId, raw1ImpactTime);
 });
 */
-async function main(raw1PublicId, raw1ImpactTime) {
+async function main(
+  raw1PublicId,
+  raw1ImpactTime,
+  raw2PublicId,
+  raw2ImpactTime
+) {
   //This is the HTML snippet of the edited video
   const htmlSnippet = cloudinary.video(raw1PublicId, {
     end_offset: raw1ImpactTime + 3,
     start_offset: raw1ImpactTime - 3,
-    transformation: {
-      //This transformation adds the logo overlay to the video (logo is stored in cloudinary, currently using pebble logo)
-      overlay: "psibwxeuh2c5wnnh8o4j", //"dthc1g5nfk0bl7cj0doo",
-      gravity: "north_east", // Position at top right
-      x: 50, // Margin from the right edge
-      y: 50, // Margin from the top edge
-      width: 500,
-      //height: 300,
-    },
+    transformation: [
+      {
+        //This transformation adds the logo overlay to the video (logo is stored in cloudinary, currently using pebble logo)
+        overlay: "psibwxeuh2c5wnnh8o4j", //"dthc1g5nfk0bl7cj0doo",
+        gravity: "north_east", // Position at top right
+        x: 50, // Margin from the right edge
+        y: 50, // Margin from the top edge
+        width: 500,
+        //height: 300,
+      },
+      {
+        overlay: "h1lwbct12rylznmjsv10",
+      },
+    ],
   });
+
+  //music: h1lwbct12rylznmjsv10
 
   //Use Regex to find the MP4 URL
   const regex = /<source src='([^']+\.mp4)'/;
