@@ -82,4 +82,11 @@ async function insertClipToSupabase(publicId, url, groupId) {
     .from("clips")
     .insert([{ public_id: publicId, url: url, group_id: "0" }])
     .select();
+
+  if (error) {
+    console.log(error);
+    Response.json({ error: error });
+  } else {
+    Response.json({ message: "Uploaded clip to supabase successfully!" });
+  }
 }
