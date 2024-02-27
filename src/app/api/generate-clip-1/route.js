@@ -48,24 +48,15 @@ async function main(
   const htmlSnippet = cloudinary.video(raw1PublicId, {
     end_offset: raw1ImpactTime + 3,
     start_offset: raw1ImpactTime - 3,
-    transformation: [
-      // First transformation: Adds the logo overlay to the video
-      {
-        overlay: "psibwxeuh2c5wnnh8o4j", // Your logo overlay
-        gravity: "north_east", // Position at top right
-        x: 50, // Margin from the right edge
-        y: 50, // Margin from the top edge
-        width: 500, // Logo width
-        // height is optional
-      },
-      // Second transformation: Adds the audio overlay
-      {
-        overlay: "audio:h1lwbct12rylznmjsv10", // The audio file's public ID prefixed with 'video:'
-        flags: "layer_apply", // Important for adding the audio alongside the video, not as a visual overlay
-        start_offset: "0", // Optional, depending on whether you want the audio to start at a specific point
-        // You may need to adjust volume or other parameters depending on your requirements
-      },
-    ],
+    transformation: {
+      //This transformation adds the logo overlay to the video (logo is stored in cloudinary, currently using pebble logo)
+      overlay: "psibwxeuh2c5wnnh8o4j", //"dthc1g5nfk0bl7cj0doo",
+      gravity: "north_east", // Position at top right
+      x: 50, // Margin from the right edge
+      y: 50, // Margin from the top edge
+      width: 500,
+      //height: 300,
+    },
   });
 
   //music: h1lwbct12rylznmjsv10
