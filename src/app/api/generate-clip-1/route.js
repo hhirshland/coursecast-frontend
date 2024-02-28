@@ -119,7 +119,6 @@ async function main(
 
   //Use Regex to find the MP4 URL
   const regex = /<source src='([^']+\.mp4)'/;
-  np;
   const match = htmlSnippet.match(regex);
   const mp4Url = match ? match[1] : "MP4 URL not found";
   console.log(htmlSnippet);
