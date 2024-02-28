@@ -31,19 +31,6 @@ export async function POST(request) {
   return Response.json({ message: "Clip should be getting generated!" });
 }
 
-//OLD CODE BELOW
-/*
-functions.http("generateClip", (req, res) => {
-  console.log(req.body);
-  const raw1PublicId = req.body.record.raw_1_public_id;
-  const raw1ImpactFrame = req.body.record.raw_1_impact_frame;
-  console.log("raw 1 public id:");
-  console.log(raw1PublicId);
-  const raw1ImpactTime = raw1ImpactFrame / 60; //60 FPS
-
-  main(raw1PublicId, raw1ImpactTime);
-});
-*/
 async function main(
   raw1PublicId,
   raw1ImpactTime,
@@ -99,29 +86,13 @@ async function main(
     ],
   });
 
-  /*
-  const htmlSnippet = cloudinary.video(raw1PublicId, {
-    end_offset: raw1ImpactTime + 3,
-    start_offset: raw1ImpactTime - 3,
-    transformation: {
-      //This transformation adds the logo overlay to the video (logo is stored in cloudinary, currently using pebble logo)
-      overlay: "psibwxeuh2c5wnnh8o4j", //"dthc1g5nfk0bl7cj0doo",
-      gravity: "north_east", // Position at top right
-      x: 50, // Margin from the right edge
-      y: 50, // Margin from the top edge
-      width: 500,
-      //height: 300,
-    },
-  });
-  */
-
   //music: h1lwbct12rylznmjsv10
 
   //Use Regex to find the MP4 URL
   const regex = /<source src='([^']+\.mp4)'/;
   const match = htmlSnippet.match(regex);
   const mp4Url = match ? match[1] : "MP4 URL not found";
-  console.log(htmlSnippet);
+  //console.log(htmlSnippet);
   console.log(mp4Url);
 
   //Using the MP4 URL, upload the trimmed video clip to Cloudinary
@@ -143,6 +114,8 @@ async function uploadVideoToCloudinary(videoUrl) {
     .catch((error) => {
       console.error("Error uploading video:", error);
     });
+
+  console.log("Video uploaded to cloudinary successfully!");
 }
 
 //This function takes a clip's public_id, url, and group_id and inserts this data into the supabase clips table
@@ -156,6 +129,7 @@ async function insertClipToSupabase(publicId, url, groupId) {
     console.log(error);
     Response.json({ error: error });
   } else {
+    console.log("Uploaded clip to supabase successfully!");
     Response.json({ message: "Uploaded clip to supabase successfully!" });
   }
 }
