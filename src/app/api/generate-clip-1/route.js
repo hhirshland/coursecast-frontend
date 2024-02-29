@@ -126,7 +126,7 @@ async function uploadVideoToCloudinary(videoUrl) {
 
   try {
     console.log("Entering the TRY");
-    const result = await cloudinary.v2.uploader.upload(videoUrl, {
+    const result = await cloudinary.uploader.upload(videoUrl, {
       resource_type: "video",
     });
     console.log("Video upload result: " + result);
@@ -136,7 +136,7 @@ async function uploadVideoToCloudinary(videoUrl) {
     //Response.json({ error: error });
   }
 
-  cloudinary.v2.uploader
+  cloudinary.uploader
     .upload(videoUrl, {
       resource_type: "video",
     })
