@@ -156,6 +156,7 @@ async function uploadVideoToCloudinary(videoUrl) {
 
 //This function takes a clip's public_id, url, and group_id and inserts this data into the supabase clips table
 async function insertClipToSupabase(publicId, url, groupId) {
+  console.log("Inserting clip to supabase.");
   const { data, error } = await supabase
     .from("clips")
     .insert([{ public_id: publicId, url: url, group_id: groupId }]);
