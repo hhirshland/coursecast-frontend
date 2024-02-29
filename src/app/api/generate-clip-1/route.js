@@ -107,6 +107,7 @@ async function main(
 
 //This function take a video URL and uploads the video to cloudinary. It then inserts the clip data into the supabase clips table
 async function uploadVideoToCloudinary(videoUrl) {
+  await insertClipToSupabase("no-public-id", videoUrl, "0");
   console.log(videoUrl);
   console.log("Running uploadVideoToCloudinary function.");
   /*
@@ -161,9 +162,9 @@ async function insertClipToSupabase(publicId, url, groupId) {
 
   if (error) {
     console.log(error);
-    Response.json({ error: error });
+    //Response.json({ error: error });
   } else {
     console.log("Uploaded clip to supabase successfully!");
-    Response.json({ message: "Uploaded clip to supabase successfully!" });
+    //Response.json({ message: "Uploaded clip to supabase successfully!" });
   }
 }
