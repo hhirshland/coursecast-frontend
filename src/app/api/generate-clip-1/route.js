@@ -10,6 +10,7 @@ const { createClient } = require("@supabase/supabase-js");
 const supabaseUrl = "https://ixbrsgekfioaizpwaogk.supabase.co";
 const supabaseKey =
   "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Iml4YnJzZ2VrZmlvYWl6cHdhb2drIiwicm9sZSI6InNlcnZpY2Vfcm9sZSIsImlhdCI6MTcwMTgxNjg4NywiZXhwIjoyMDE3MzkyODg3fQ.MTggLFvV5ZzR50oQCARPEcQs5SCzWvToLOj2ozI_XtY";
+
 const supabase = createClient(supabaseUrl, supabaseKey);
 
 export async function POST(request) {
@@ -71,11 +72,12 @@ async function main(
       },
       { flags: "layer_apply" },
 
-      */
+     
 
       //This overlay adds the audio to the video
       { overlay: "audio:h1lwbct12rylznmjsv10" },
       { flags: "layer_apply" },
+       */
 
       {
         //This transformation adds the logo overlay to the video (logo is stored in cloudinary, currently using pebble logo)
