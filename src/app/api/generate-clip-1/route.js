@@ -28,7 +28,7 @@ export async function POST(request) {
   const raw4ImpactFrame = body.record.raw_4_impact_frame;
   const raw4ImpactTime = raw4ImpactFrame / 60; //60 FPS
 
-  main(raw1PublicId, raw1ImpactTime, raw2PublicId, raw2ImpactTime);
+  await main(raw1PublicId, raw1ImpactTime, raw2PublicId, raw2ImpactTime);
   return Response.json({ message: "Clip should be getting generated!" });
 }
 
