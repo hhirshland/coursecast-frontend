@@ -121,8 +121,18 @@ async function uploadVideoToCloudinary(videoUrl) {
     }
   );
 */
+  try {
+    const result = await cloudinary.uploader.upload_large(videoUrl, {
+      resource_type: "video",
+    });
+    console.log("Video upload result: " + result);
+    await insertClipToSupabase(result.public_id, result.url, "0");
+  } catch (error) {
+    console.log("Error uploading video:", error);
+    //Response.json({ error: error });
+  }
 
-  cloudinary.uploader
+  /* cloudinary.uploader
     .upload(videoUrl, {
       resource_type: "video",
     })
@@ -135,8 +145,8 @@ async function uploadVideoToCloudinary(videoUrl) {
     .catch((error) => {
       console.error("Error uploading video:", error);
     });
-
-  console.log("Video uploaded to cloudinary successfully!");
+*/
+  console.log("Finished running uploadVideoToCloudinary function.");
 }
 
 //This function takes a clip's public_id, url, and group_id and inserts this data into the supabase clips table
