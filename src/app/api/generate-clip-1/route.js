@@ -107,6 +107,7 @@ async function main(
 
 //This function take a video URL and uploads the video to cloudinary. It then inserts the clip data into the supabase clips table
 async function uploadVideoToCloudinary(videoUrl) {
+  console.lov(videoUrl);
   console.log("Running uploadVideoToCloudinary function.");
   /*
   cloudinary.uploader.upload_large(
@@ -122,9 +123,10 @@ async function uploadVideoToCloudinary(videoUrl) {
     }
   );
 */
+
   try {
     console.log("Entering the TRY");
-    const result = await cloudinary.uploader.upload(videoUrl, {
+    const result = await cloudinary.v2.uploader.upload(videoUrl, {
       resource_type: "video",
     });
     console.log("Video upload result: " + result);
@@ -134,7 +136,7 @@ async function uploadVideoToCloudinary(videoUrl) {
     //Response.json({ error: error });
   }
 
-  /* cloudinary.uploader
+  cloudinary.v2.uploader
     .upload(videoUrl, {
       resource_type: "video",
     })
@@ -147,7 +149,7 @@ async function uploadVideoToCloudinary(videoUrl) {
     .catch((error) => {
       console.error("Error uploading video:", error);
     });
-*/
+
   console.log("Finished running uploadVideoToCloudinary function.");
 }
 
