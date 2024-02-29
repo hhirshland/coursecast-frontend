@@ -124,7 +124,7 @@ async function uploadVideoToCloudinary(videoUrl) {
 */
   try {
     console.log("Entering the TRY");
-    const result = await cloudinary.uploader.upload_large(videoUrl, {
+    const result = await cloudinary.uploader.upload(videoUrl, {
       resource_type: "video",
     });
     console.log("Video upload result: " + result);
