@@ -109,10 +109,13 @@ async function main(
 async function uploadVideoToCloudinary(videoUrl) {
   //await insertClipToSupabase("no-public-id", videoUrl, "0");
   console.log("Uploading video to cloudinary.");
-  cloudinary.uploader
-    .unsigned_upload("sample.jpg", "unsigned_1")
-    .then((result) => console.log(result));
-
+  const res = await cloudinary.uploader.unsigned_upload(
+    "sample.jpg",
+    "unsigned_1"
+  );
+  //.then((result) => console.log(result));
+  console.log("PRINTING res");
+  console.log(res);
   console.log("Finished uploading video to cloudinary.");
   console.log(videoUrl);
   console.log("Running uploadVideoToCloudinary function.");
