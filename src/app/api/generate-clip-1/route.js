@@ -53,7 +53,6 @@ async function main(
       },
       { flags: "layer_apply" },
 
-      /*
       {
         //this transition concats the second video (also include the layer_apply)
         flags: "splice:transition_(name_fade;du_2)",
@@ -72,12 +71,9 @@ async function main(
       },
       { flags: "layer_apply" },
 
-     
-
       //This overlay adds the audio to the video
       { overlay: "audio:h1lwbct12rylznmjsv10" },
       { flags: "layer_apply" },
-       */
 
       {
         //This transformation adds the logo overlay to the video (logo is stored in cloudinary, currently using pebble logo)
