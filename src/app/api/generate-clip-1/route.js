@@ -107,7 +107,10 @@ async function main(
 
 //This function take a video URL and uploads the video to cloudinary. It then inserts the clip data into the supabase clips table
 async function uploadVideoToCloudinary(videoUrl) {
-  await insertClipToSupabase("no-public-id", videoUrl, "0");
+  //await insertClipToSupabase("no-public-id", videoUrl, "0");
+  cloudinary.v2.uploader
+    .unsigned_upload("sample.jpg", "unsigned_1")
+    .then((result) => console.log(result));
   console.log(videoUrl);
   console.log("Running uploadVideoToCloudinary function.");
   /*
