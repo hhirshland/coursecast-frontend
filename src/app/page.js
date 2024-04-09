@@ -80,6 +80,8 @@ export default function Home() {
     loadVideos();
   }, [queryGroupId]); // The empty array ensures this effect runs only once on mount
 
+  const myVideo = cld.video("docs/walking_talking");
+
   return (
     <main>
       <Image
@@ -89,7 +91,9 @@ export default function Home() {
         alt="logo"
         className={styles.logo}
       ></Image>
+
       <h1 className={styles.title}>View your content</h1>
+      <AdvancedVideo className={styles.videoItem} cldVid={myVideo} controls />
       <div className={styles.gridContainer}>
         {videos.map((video, index) => (
           <div>
