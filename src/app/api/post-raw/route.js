@@ -8,8 +8,8 @@ const supabase = createClient(supabaseUrl, supabaseKey);
 
 export async function POST(request) {
   const body = await request.json();
-  const videoPublicId = body.record.video_public_id;
-  const videoJson = body.record.video_json;
+  const videoPublicId = body.video_public_id;
+  const videoJson = body.video_json;
   console.log("videoPublicId: ", videoPublicId);
   console.log("videoJson: ", videoJson);
 
