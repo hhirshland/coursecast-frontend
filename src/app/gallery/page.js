@@ -102,12 +102,14 @@ export default function Home() {
             <div key={index}>
               <div className={styles.videoDetails}>
                 <div className={styles.videoDetailsLeft}>
-                  <p>Your Group</p>
+                  <p>
+                    <b>Your Group</b>
+                  </p>
                   <p>Stanford Hole 8</p>
                 </div>
                 <div className={styles.videoDetailsRight}>
                   <p>April 23rd</p>
-                  <p>4:38pm</p>
+                  <p>4:38 pm</p>
                 </div>
               </div>
               <AdvancedVideo

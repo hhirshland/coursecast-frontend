@@ -15,6 +15,10 @@
 .title {
   text-align: center;
 }
+.videoDetails p {
+  margin: 0;
+  padding: 0;
+}
 
 .videoDetails {
   color: #8a8a8e;
@@ -28,6 +32,9 @@
 
 .videoDetailsLeft,
 .videoDetailsRight {
+  display: flex;
+  flex-direction: column;
+  gap: 4px; /* This controls the space between the <p> tags */
 }
 
 .gridContainer {
