@@ -86,29 +86,41 @@ export default function Home() {
   const myVideo = cld.video("docs/walking_talking");
 
   return (
-    <main>
-      <Image
-        src="/coursecast_logo2.png"
-        width={400}
-        height={100}
-        alt="logo"
-        className={styles.logo}
-      ></Image>
-
-      <h1 className={styles.title}>View your content</h1>
-      <div className={styles.gridContainer}>
-        {videos.map((video, index) => (
-          <div key={index}>
-            <AdvancedVideo
-              className={styles.videoItem}
-              cldVid={video.video}
-              cldPoster="auto"
-              controls
-              key={/*video.videoId*/ index}
-            />
-          </div>
-        ))}
+    <div>
+      <div className={styles.navBar}>
+        <Image
+          src="/coursecast_logo2.png"
+          width={128}
+          height={28}
+          alt="logo"
+          className={styles.logo}
+        ></Image>
       </div>
-    </main>
+      <main>
+        <div className={styles.gridContainer}>
+          {videos.map((video, index) => (
+            <div key={index}>
+              <div className={styles.videoDetails}>
+                <div className={styles.videoDetailsLeft}>
+                  <p>Your Group</p>
+                  <p>Stanford Hole 8</p>
+                </div>
+                <div className={styles.videoDetailsRight}>
+                  <p>April 23rd</p>
+                  <p>4:38pm</p>
+                </div>
+              </div>
+              <AdvancedVideo
+                className={styles.videoItem}
+                cldVid={video.video}
+                //cldPoster="auto"
+                controls
+                key={/*video.videoId*/ index}
+              />
+            </div>
+          ))}
+        </div>
+      </main>
+    </div>
   );
 }
