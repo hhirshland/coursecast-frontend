@@ -101,26 +101,11 @@ async function uploadVideoToCloudinary(videoUrl, groupId) {
 
   try {
     console.log("Entering the TRY");
-    cloudinary.v2.uploader
-      .upload(videoUrl, {
-        resource_type: "video",
-      })
-      .then(async (result) => {
-        console.log("Video uploaded successfully");
-        console.log(result);
-        //After uploading the clip to cloudinary, insert the clip data into the supabase clips table
-        await insertClipToSupabase(result.public_id, result.url, groupId);
-      })
-      .catch((error) => {
-        console.error("Error uploading video:", error);
-      });
-    /*
     const result = await cloudinary.v2.uploader.upload(videoUrl, {
       resource_type: "video",
     });
     console.log("Video upload result: " + result);
     await insertClipToSupabase(result.public_id, result.url, groupId);
-    */
   } catch (error) {
     console.log("Error uploading video:", error);
     //Response.json({ error: error });
