@@ -98,20 +98,20 @@ async function uploadVideoToCloudinary(videoUrl, groupId) {
     }
   );
 */
-  /*
+
   try {
     console.log("Entering the TRY");
-    const result = await cloudinary.uploader.upload(videoUrl, {
+    const result = await cloudinary.v2.uploader.upload(videoUrl, {
       resource_type: "video",
     });
     console.log("Video upload result: " + result);
-    await insertClipToSupabase(result.public_id, result.url, "0");
+    await insertClipToSupabase(result.public_id, result.url, groupId);
   } catch (error) {
     console.log("Error uploading video:", error);
     //Response.json({ error: error });
   }
-*/
-  console.log("Uploading video to cloudinary.");
+
+  console.log("Uploading video to cloudinary. about to enter the .then ");
   cloudinary.v2.uploader
     .upload(videoUrl, {
       resource_type: "video",
