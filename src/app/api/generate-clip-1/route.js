@@ -59,6 +59,11 @@ async function generateClip(groupId) {
 
   const transformations = [];
 
+  const baseURL = "https://res.cloudinary.com/dnuabur2f";
+  const videoURL = generateCloudinaryURL(baseURL, rawUploads);
+  console.log("videoUrl: " + videoURL);
+
+  /*
   rawUploads.forEach((upload, index) => {
     if (index > 0) {
       // Skip the first because it's handled outside the loop
@@ -69,7 +74,6 @@ async function generateClip(groupId) {
       transformations.push({ flags: "layer_apply" });
     }
   });
-
   // Always assume the first video as the base
   transformations.unshift({
     resource_type: "video",
@@ -101,8 +105,24 @@ async function generateClip(groupId) {
   //console.log(htmlSnippet);
   console.log("mp4url: " + mp4Url);
 
+  */
+
   //Using the MP4 URL, upload the trimmed video clip to Cloudinary
-  uploadVideoToCloudinary(mp4Url);
+  uploadVideoToCloudinary(videoURL);
+}
+
+function generateCloudinaryURL(baseURL, uploads) {
+  let url = `${baseURL}/video/upload/`;
+
+  // Append transformations for each video
+  uploads.forEach((upload) => {
+    url += `fl_splice,l_video:${upload.public_id}/fl_layer_apply/`;
+  });
+
+  // Add a generic output file name
+  url += "concatenated_video.mp4";
+
+  return url;
 }
 
 async function main(
@@ -177,6 +197,7 @@ async function main(
 //This function take a video URL and uploads the video to cloudinary. It then inserts the clip data into the supabase clips table
 async function uploadVideoToCloudinary(videoUrl) {
   //await insertClipToSupabase("no-public-id", videoUrl, "0");
+  /*
   console.log("Uploading video to cloudinary.");
   const res = await cloudinary.uploader.unsigned_upload(
     "sample.jpg",
