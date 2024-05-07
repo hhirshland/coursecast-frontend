@@ -55,6 +55,10 @@ async function generateClip(groupId) {
 
 function generateCloudinaryURL(baseURL, uploads) {
   let url = `${baseURL}/video/upload/`;
+  let logoOverlay =
+    "l_psibwxeuh2c5wnnh8o4j/fl_layer_apply,g_north_east,x_50,y_50/";
+
+  let music = "l_audio:h1lwbct12rylznmjsv10/fl_layer_apply/";
 
   // Append each subsequent video with fl_splice
   uploads.forEach((upload, index) => {
@@ -64,9 +68,9 @@ function generateCloudinaryURL(baseURL, uploads) {
   });
 
   //Add the first video
-  url += "l_audio:h1lwbct12rylznmjsv10/fl_layer_apply/";
-  url += uploads[0].public_id;
-  url += ".mp4";
+  url += logoOverlay + music + uploads[0].public_id + ".mp4";
+  //url += uploads[0].public_id;
+  //url += ".mp4";
 
   return url;
 }
