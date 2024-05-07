@@ -114,15 +114,16 @@ async function generateClip(groupId) {
 function generateCloudinaryURL(baseURL, uploads) {
   let url = `${baseURL}/video/upload/`;
 
-  // Start with the first video using just the public_id
-  if (uploads.length > 0) {
-    url += `l_video:${uploads[0].public_id},fl_layer_apply`;
-  }
-
   // Append each subsequent video with fl_splice
-  uploads.slice(1).forEach((upload) => {
-    url += `/l_video:${upload.public_id},fl_splice,fl_layer_apply`;
+  uploads.slice(1).forEach((upload, index) => {
+    if (index > 0) {
+      url += `fl_splice,l_video:${upload.public_id}/fl_layer_apply/`;
+    }
+
+    //url += `/l_video:${upload.public_id},fl_splice,fl_layer_apply`;
   });
+
+  url += uploads[0].public_id;
 
   return url;
 }
