@@ -48,7 +48,7 @@ async function generateClip(groupId) {
   console.log("videoUrl: " + videoURL);
 
   //Using the MP4 URL, upload the trimmed video clip to Cloudinary
-  uploadVideoToCloudinary(videoURL, groupId);
+  await uploadVideoToCloudinary(videoURL, groupId);
 }
 
 function generateCloudinaryURL(baseURL, uploads) {
