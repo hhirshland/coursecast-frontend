@@ -103,9 +103,11 @@ async function uploadVideoToCloudinary(videoUrl, groupId) {
 
   try {
     console.log("Entering the TRY");
+    console.log("videoUrl: " + videoUrl);
     const result = await cloudinary.v2.uploader.upload(videoUrl, {
       resource_type: "video",
     });
+    console.log("upload should be finished");
     console.log("Video upload result: " + result);
     await insertClipToSupabase(result.public_id, result.url, groupId);
   } catch (error) {
