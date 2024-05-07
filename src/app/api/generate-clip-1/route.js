@@ -123,6 +123,7 @@ function generateCloudinaryURL(baseURL, uploads) {
     //url += `/l_video:${upload.public_id},fl_splice,fl_layer_apply`;
   });
 
+  url += "l_audio:h1lwbct12rylznmjsv10/fl_layer_apply/";
   url += uploads[0].public_id;
   url += ".mp4";
 
@@ -227,7 +228,7 @@ async function uploadVideoToCloudinary(videoUrl) {
     }
   );
 */
-
+  /*
   try {
     console.log("Entering the TRY");
     const result = await cloudinary.uploader.upload(videoUrl, {
@@ -239,7 +240,8 @@ async function uploadVideoToCloudinary(videoUrl) {
     console.log("Error uploading video:", error);
     //Response.json({ error: error });
   }
-
+*/
+  console.log("Uploading video to cloudinary.");
   cloudinary.uploader
     .upload(videoUrl, {
       resource_type: "video",
