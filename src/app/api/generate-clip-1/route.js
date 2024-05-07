@@ -20,11 +20,13 @@ export async function POST(request) {
   console.log("body.old_record: " + body.old_record);
   let updatedRecord = body.record;
   let oldRecord = body.old_record;
+  //Check to see if the update is setting generate-clip to TRUE, meaning we should generate the clip
   if (
     updatedRecord.clip_1_generated == true &&
     oldRecord.clip_1_generated != true
   ) {
     console.log("group ready for clip generation: " + updatedRecord.group_id);
+    await generateClip(updatedRecord.group_id);
   }
 
   /*
@@ -45,6 +47,15 @@ export async function POST(request) {
   return Response.json({
     message: `Clip should be getting generated for group ${updatedRecord.group_id}`,
   });
+}
+
+async function generateClip(groupId) {
+  let { data: raw_uploads, error } = await supabase
+    .from("raw_uploads")
+    .select("*")
+    .eq("group_id", groupId);
+
+  console.log("raw_uploads: ", raw_uploads);
 }
 
 async function main(
