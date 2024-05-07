@@ -23,7 +23,7 @@ export async function POST(request) {
     oldRecord.clip_1_generated != true
   ) {
     console.log("group ready for clip generation: " + updatedRecord.group_id);
-    generateClip(updatedRecord.group_id);
+    await generateClip(updatedRecord.group_id);
   }
 
   return Response.json({
@@ -33,6 +33,7 @@ export async function POST(request) {
 
 async function generateClip(groupId) {
   console.log("Starting to run generateClip function");
+  console.log("groupId: " + groupId);
   let { data: rawUploads, error } = await supabase
     .from("raw_uploads")
     .select("*")
