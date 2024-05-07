@@ -114,13 +114,15 @@ async function generateClip(groupId) {
 function generateCloudinaryURL(baseURL, uploads) {
   let url = `${baseURL}/video/upload/`;
 
-  // Append transformations for each video
-  uploads.forEach((upload) => {
-    url += `fl_splice,l_video:${upload.public_id}/fl_layer_apply/`;
-  });
+  // Start with the first video using just the public_id
+  if (uploads.length > 0) {
+    url += `l_video:${uploads[0].public_id},fl_layer_apply`;
+  }
 
-  // Add a generic output file name
-  url += "concatenated_video.mp4";
+  // Append each subsequent video with fl_splice
+  uploads.slice(1).forEach((upload) => {
+    url += `/l_video:${upload.public_id},fl_splice,fl_layer_apply`;
+  });
 
   return url;
 }
