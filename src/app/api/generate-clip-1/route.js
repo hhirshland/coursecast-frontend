@@ -15,9 +15,9 @@ const supabase = createClient(supabaseUrl, supabaseKey);
 
 export async function POST(request) {
   const body = await request.json();
-  console.log("body: " + body);
-  console.log("body.record: " + body.record);
-  console.log("body.old_record: " + body.old_record);
+  //console.log("body: " + body);
+  //console.log("body.record: " + body.record);
+  //console.log("body.old_record: " + body.old_record);
   let updatedRecord = body.record;
   let oldRecord = body.old_record;
   //Check to see if the update is setting generate-clip to TRUE, meaning we should generate the clip
@@ -50,12 +50,59 @@ export async function POST(request) {
 }
 
 async function generateClip(groupId) {
-  let { data: raw_uploads, error } = await supabase
+  let { data: rawUploads, error } = await supabase
     .from("raw_uploads")
     .select("*")
     .eq("group_id", groupId);
 
-  console.log("raw_uploads: ", raw_uploads);
+  console.log("rawUploads: ", rawUploads);
+
+  const transformations = [];
+
+  rawUploads.forEach((upload, index) => {
+    if (index > 0) {
+      // Skip the first because it's handled outside the loop
+      transformations.push({
+        flags: "splice:transition_(name_fade;du_2)",
+        overlay: `video:${upload.public_id}`,
+      });
+      transformations.push({ flags: "layer_apply" });
+    }
+  });
+
+  // Always assume the first video as the base
+  transformations.unshift({
+    resource_type: "video",
+    public_id: rawUploads[0].public_id,
+  });
+
+  // Additional transformations (for example, adding audio or a logo)
+  transformations.push(
+    { overlay: "audio:h1lwbct12rylznmjsv10" },
+    { flags: "layer_apply" },
+    {
+      overlay: "psibwxeuh2c5wnnh8o4j",
+      gravity: "north_east",
+      x: 50,
+      y: 50,
+      width: 500,
+    }
+  );
+
+  const htmlSnippet = cloudinary.video(transformations[0].public_id, {
+    transformation: transformations.slice(1),
+  });
+  console.log("html snippet: " + htmlSnippet);
+
+  //Use Regex to find the MP4 URL
+  const regex = /<source src='([^']+\.mp4)'/;
+  const match = htmlSnippet.match(regex);
+  const mp4Url = match ? match[1] : "MP4 URL not found";
+  //console.log(htmlSnippet);
+  console.log("mp4url: " + mp4Url);
+
+  //Using the MP4 URL, upload the trimmed video clip to Cloudinary
+  uploadVideoToCloudinary(mp4Url);
 }
 
 async function main(
@@ -200,3 +247,45 @@ async function insertClipToSupabase(publicId, url, groupId) {
     //Response.json({ message: "Uploaded clip to supabase successfully!" });
   }
 }
+
+/*
+const htmlSnippet = cloudinary.video(raw1PublicId, {
+  transformation: [
+    {
+      //this transition concats the second video (also include the layer_apply)
+      flags: "splice:transition_(name_fade;du_2)",
+      overlay: "video:" + raw2PublicId,
+    },
+    { flags: "layer_apply" },
+
+    {
+      //this transition concats the second video (also include the layer_apply)
+      flags: "splice:transition_(name_fade;du_2)",
+      overlay: "video:" + raw1PublicId,
+    },
+    { flags: "layer_apply" },
+
+    {
+      //this transition concats the second video (also include the layer_apply)
+      flags: "splice:transition_(name_fade;du_2)",
+      overlay: "video:" + raw2PublicId,
+    },
+    { flags: "layer_apply" },
+
+    //This overlay adds the audio to the video
+    { overlay: "audio:h1lwbct12rylznmjsv10" },
+    { flags: "layer_apply" },
+
+    {
+      //This transformation adds the logo overlay to the video (logo is stored in cloudinary, currently using pebble logo)
+      overlay: "psibwxeuh2c5wnnh8o4j", //"dthc1g5nfk0bl7cj0doo",
+      gravity: "north_east", // Position at top right
+      x: 50, // Margin from the right edge
+      y: 50, // Margin from the top edge
+      width: 500,
+      //height: 300,
+      //overlay: "video:Hole3_TeeShot_2_ppyntv",
+    },
+  ],
+});
+*/
