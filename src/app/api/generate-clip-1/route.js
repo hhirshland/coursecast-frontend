@@ -15,9 +15,6 @@ const supabase = createClient(supabaseUrl, supabaseKey);
 
 export async function POST(request) {
   const body = await request.json();
-  //console.log("body: " + body);
-  //console.log("body.record: " + body.record);
-  //console.log("body.old_record: " + body.old_record);
   let updatedRecord = body.record;
   let oldRecord = body.old_record;
   //Check to see if the update is setting generate-clip to TRUE, meaning we should generate the clip
@@ -29,17 +26,21 @@ export async function POST(request) {
     generateClip(updatedRecord.group_id);
   }
 
-  //await main(raw1PublicId, raw1ImpactTime, raw2PublicId, raw2ImpactTime);
   return Response.json({
     message: `Clip should be getting generated for group ${updatedRecord.group_id}`,
   });
 }
 
 async function generateClip(groupId) {
+  console.log("Starting to run generateClip function");
   let { data: rawUploads, error } = await supabase
     .from("raw_uploads")
     .select("*")
     .eq("group_id", groupId);
+
+  if (error) {
+    console.log(error);
+  }
 
   console.log("rawUploads: ", rawUploads);
 
