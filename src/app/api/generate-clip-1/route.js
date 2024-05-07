@@ -26,7 +26,7 @@ export async function POST(request) {
     oldRecord.clip_1_generated != true
   ) {
     console.log("group ready for clip generation: " + updatedRecord.group_id);
-    await generateClip(updatedRecord.group_id);
+    generateClip(updatedRecord.group_id);
   }
 
   //await main(raw1PublicId, raw1ImpactTime, raw2PublicId, raw2ImpactTime);
