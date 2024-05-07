@@ -15,6 +15,19 @@ const supabase = createClient(supabaseUrl, supabaseKey);
 
 export async function POST(request) {
   const body = await request.json();
+  console.log("body: " + body);
+  console.log("body.record: " + body.record);
+  console.log("body.old_record: " + body.old_record);
+  let updatedRecord = body.record;
+  let oldRecord = body.old_record;
+  if (
+    updatedRecord.clip_1_generated == true &&
+    oldRecord.clip_1_generated != true
+  ) {
+    console.log("group ready for clip generation: " + updatedRecord.group_id);
+  }
+
+  /*
   const raw1PublicId = body.record.raw_1_public_id;
   const raw1ImpactFrame = body.record.raw_1_impact_frame;
   const raw1ImpactTime = raw1ImpactFrame / 60; //60 FPS
@@ -27,9 +40,11 @@ export async function POST(request) {
   const raw4PublicId = body.record.raw_4_public_id;
   const raw4ImpactFrame = body.record.raw_4_impact_frame;
   const raw4ImpactTime = raw4ImpactFrame / 60; //60 FPS
-
-  await main(raw1PublicId, raw1ImpactTime, raw2PublicId, raw2ImpactTime);
-  return Response.json({ message: "Clip should be getting generated!" });
+*/
+  //await main(raw1PublicId, raw1ImpactTime, raw2PublicId, raw2ImpactTime);
+  return Response.json({
+    message: `Clip should be getting generated for group ${updatedRecord.group_id}`,
+  });
 }
 
 async function main(
