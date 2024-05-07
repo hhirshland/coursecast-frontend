@@ -115,7 +115,7 @@ function generateCloudinaryURL(baseURL, uploads) {
   let url = `${baseURL}/video/upload/`;
 
   // Append each subsequent video with fl_splice
-  uploads.slice(1).forEach((upload, index) => {
+  uploads.forEach((upload, index) => {
     if (index > 0) {
       url += `fl_splice,l_video:${upload.public_id}/fl_layer_apply/`;
     }
@@ -124,6 +124,7 @@ function generateCloudinaryURL(baseURL, uploads) {
   });
 
   url += uploads[0].public_id;
+  url += ".mp4";
 
   return url;
 }
