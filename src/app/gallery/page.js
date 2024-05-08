@@ -98,7 +98,7 @@ export default function Home() {
       </div>
       <main>
         <div className={styles.gridContainer}>
-          <video className="video" controls key={"test"}>
+          <video className={styles.videoItem} controls key={"test"}>
             <source
               src="https://res.cloudinary.com/dnuabur2f/video/upload/l_audio:nice-shot-daniel/fl_layer_apply,so_1.2/fl_splice,l_video:test-clip-1/fl_layer_apply/fl_splice,l_video:test-clip-1/fl_layer_apply/fl_splice,l_video:test-clip-1/fl_layer_apply/l_psibwxeuh2c5wnnh8o4j/fl_layer_apply,g_north_east,x_50,y_50/l_audio:h1lwbct12rylznmjsv10/fl_layer_apply/test-clip-1.mp4"
               type="video/mp4"
