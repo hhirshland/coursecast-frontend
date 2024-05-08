@@ -69,11 +69,24 @@ async function fetchVideos(queryGroupId) {
 //This function fetches videos from supabase and cloudinary, filtering based on the group_id parameter in the url (if present)
 async function fetchVideoUrls() {
   console.log("fetchVideos called");
-  let { data: clips, error } = await supabase.from("clips").select("*");
+  let { data: clips, error } = await supabase
+    .from("clips")
+    .select("*")
+    .order("created_at", { ascending: false });
   console.log("clips: ", clips);
   if (error) console.log(error);
   return clips;
 }
+
+const formatDate = (dateString) => {
+  const date = new Date(dateString);
+  return date.toLocaleDateString(); // formats date as "MM/DD/YYYY" in the U.S.
+};
+
+const formatTime = (dateString) => {
+  const date = new Date(dateString);
+  return date.toLocaleTimeString(); // formats time as "HH:MM:SS AM/PM" in the U.S.
+};
 
 export default function Home() {
   const [videos, setVideos] = useState([]);
@@ -120,8 +133,8 @@ export default function Home() {
                   <p>Stanford Hole 8</p>
                 </div>
                 <div className={styles.videoDetailsRight}>
-                  <p>{clip.created_at}</p>
-                  <p>{clip.created_at}</p>
+                  <p>{formatDate(clip.created_at)}</p>
+                  <p>{formatTime(clip.created_at)}</p>
                 </div>
               </div>
               <video className={styles.videoItem} controls key={clip.id}>
