@@ -112,13 +112,16 @@ async function uploadVideoToCloudinary(videoUrl, groupId) {
     console.log("Entering the TRY");
     console.log("videoUrl: " + videoUrl);
     //Trying as new api endpoint
-    const response = await fetch("/api/post-clip", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({ videoUrl: videoUrl }),
-    });
+    const response = await fetch(
+      "https://coursecast-frontend.vercel.app/api/post-clip",
+      {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ videoUrl: videoUrl }),
+      }
+    );
 
     const resjson = await response.json();
     console.log("resjson", resjson);
