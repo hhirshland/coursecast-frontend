@@ -66,9 +66,19 @@ async function fetchVideos(queryGroupId) {
   return videosArray;
 }
 
+//This function fetches videos from supabase and cloudinary, filtering based on the group_id parameter in the url (if present)
+async function fetchVideoUrls() {
+  console.log("fetchVideos called");
+  let { data: clips, error } = await supabase.from("clips").select("*");
+  console.log("clips: ", clips);
+  if (error) console.log(error);
+  return clips;
+}
+
 export default function Home() {
   const [videos, setVideos] = useState([]);
   const searchParams = useSearchParams();
+  const [clips, setClips] = useState(null);
   //console.log(searchParams);
   //console.log(searchParams.get("group_id"));
   const queryGroupId = searchParams.get("group_id");
@@ -79,6 +89,8 @@ export default function Home() {
     async function loadVideos() {
       const videosArray = await fetchVideos(queryGroupId);
       setVideos(videosArray);
+      const clipsJson = await fetchVideoUrls();
+      setClips(clipsJson);
     }
     loadVideos();
   }, []); // The empty array ensures this effect runs only once on mount
@@ -98,13 +110,27 @@ export default function Home() {
       </div>
       <main>
         <div className={styles.gridContainer}>
-          <video className={styles.videoItem} controls key={"test"}>
-            <source
-              src="https://res.cloudinary.com/dnuabur2f/video/upload/l_audio:nice-shot-daniel/fl_layer_apply,so_1.2/fl_splice,l_video:test-clip-1/fl_layer_apply/fl_splice,l_video:test-clip-1/fl_layer_apply/fl_splice,l_video:test-clip-1/fl_layer_apply/l_psibwxeuh2c5wnnh8o4j/fl_layer_apply,g_north_east,x_50,y_50/l_audio:h1lwbct12rylznmjsv10/fl_layer_apply/test-clip-1.mp4"
-              type="video/mp4"
-            />
-          </video>
-          {videos.map((video, index) => (
+          {clips.map((clip, index) => (
+            <div key={index}>
+              <div className={styles.videoDetails}>
+                <div className={styles.videoDetailsLeft}>
+                  <p>
+                    <b>Group {clip.group_id}</b>
+                  </p>
+                  <p>Stanford Hole 8</p>
+                </div>
+                <div className={styles.videoDetailsRight}>
+                  <p>{clip.created_at}</p>
+                  <p>{clip.created_at}</p>
+                </div>
+              </div>
+              <video className={styles.videoItem} controls key={clip.id}>
+                <source src={clip.url} type="video/mp4" />
+              </video>
+            </div>
+          ))}
+
+          {/* videos.map((video, index) => (
             <div key={index}>
               <div className={styles.videoDetails}>
                 <div className={styles.videoDetailsLeft}>
@@ -123,10 +149,10 @@ export default function Home() {
                 cldVid={video.video}
                 //cldPoster="auto"
                 controls
-                key={/*video.videoId*/ index}
+                key={ index }
               />
             </div>
-          ))}
+          ))*/}
         </div>
       </main>
     </div>
