@@ -60,6 +60,9 @@ function generateCloudinaryURL(baseURL, uploads) {
 
   let music = "l_audio:h1lwbct12rylznmjsv10/fl_layer_apply/";
 
+  //nice-shot-daniel
+  //l_audio:nice-shot-daniel/fl_layer_apply/
+
   // Append each subsequent video with fl_splice
   uploads.forEach((upload, index) => {
     if (index > 0) {
@@ -108,6 +111,19 @@ async function uploadVideoToCloudinary(videoUrl, groupId) {
   try {
     console.log("Entering the TRY");
     console.log("videoUrl: " + videoUrl);
+    //Trying as new api endpoint
+    const response = await fetch("/api/post-clip", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({ videoUrl: videoUrl }),
+    });
+
+    const resjson = await response.json();
+    console.log("resjson", resjson);
+
+    //Old
     let result = await cloudinary.v2.uploader.upload(videoUrl, {
       resource_type: "video",
     });
