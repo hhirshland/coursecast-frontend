@@ -78,7 +78,7 @@ async function fetchVideoUrls() {
 export default function Home() {
   const [videos, setVideos] = useState([]);
   const searchParams = useSearchParams();
-  const [clips, setClips] = useState(null);
+  const [clips, setClips] = useState([]);
   //console.log(searchParams);
   //console.log(searchParams.get("group_id"));
   const queryGroupId = searchParams.get("group_id");
