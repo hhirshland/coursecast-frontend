@@ -111,6 +111,8 @@ async function uploadVideoToCloudinary(videoUrl, groupId) {
   try {
     console.log("Entering the TRY");
     console.log("videoUrl: " + videoUrl);
+
+    /*
     //Trying as new api endpoint
     const response = await fetch(
       "https://coursecast-frontend.vercel.app/api/post-clip",
@@ -127,6 +129,7 @@ async function uploadVideoToCloudinary(videoUrl, groupId) {
     console.log("resjson", resjson);
 
     //Old
+    */
     let result = await cloudinary.v2.uploader.upload(videoUrl, {
       resource_type: "video",
     });
