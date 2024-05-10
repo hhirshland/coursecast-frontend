@@ -15,7 +15,7 @@ export async function POST(request) {
 
   const { data, error } = await supabase
     .from("raw_uploads")
-    .insert([{ cloudinary_public_id: videoPublicId, video_json: videoJson }]);
+    .insert([{ public_id: videoPublicId, video_json: videoJson }]);
   if (error) {
     console.log("error", error);
     return Response.json({ message: "Error uploading video" });
