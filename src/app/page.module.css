@@ -1,3 +1,6 @@
+.videoModule {
+  max-height: 90%;
+}
 .navBar {
   background-color: white;
   height: 50px;

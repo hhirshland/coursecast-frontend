@@ -128,7 +128,7 @@ export default function Home() {
           {clips
             .filter((clip) => !queryGroupId || clip.group_id === queryGroupId)
             .map((clip, index) => (
-              <div key={index}>
+              <div key={index} className={styles.videoModule}>
                 <div className={styles.videoDetails}>
                   <div className={styles.videoDetailsLeft}>
                     <p>
