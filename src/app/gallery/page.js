@@ -91,10 +91,12 @@ const formatTime = (dateString) => {
 export default function Home() {
   const [videos, setVideos] = useState([]);
   const searchParams = useSearchParams();
+  console.log("searchParams: ", searchParams);
   const [clips, setClips] = useState([]);
   //console.log(searchParams);
   //console.log(searchParams.get("group_id"));
   const queryGroupId = searchParams.get("group_id");
+  console.log("queryGroupId: ", queryGroupId);
 
   //Fetch videos from supabase/cloudinary
   useEffect(() => {
