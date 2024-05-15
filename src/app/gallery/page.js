@@ -16,6 +16,7 @@ import { byRadius } from "@cloudinary/url-gen/actions/roundCorners";
 import { FocusOn } from "@cloudinary/url-gen/qualifiers/focusOn";
 import { Gravity } from "@cloudinary/url-gen/qualifiers";
 import { AutoFocus } from "@cloudinary/url-gen/qualifiers/autoFocus";
+import FeedbackForm from "../components/FeedbackForm";
 
 //Supabase initialization
 import { createClient } from "@supabase/supabase-js";
@@ -147,6 +148,7 @@ export default function Home() {
               </div>
             ))}
         </div>
+        {queryGroupId && <FeedbackForm groupId={queryGroupId} />}
       </main>
     </div>
   );
