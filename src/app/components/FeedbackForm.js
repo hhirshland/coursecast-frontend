@@ -5,6 +5,11 @@ const FeedbackForm = ({ groupId }) => {
       <div>Rate your video!</div>
       <div>
         <input
+          type="hidden"
+          name="_redirect"
+          value={`https://coursecast-frontend.vercel.app/gallery?group_id=${groupId}`}
+        />
+        <input
           type="radio"
           id="love"
           name="satisfaction"
