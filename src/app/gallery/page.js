@@ -97,6 +97,7 @@ export default function Home() {
   //console.log(searchParams);
   //console.log(searchParams.get("group_id"));
   const queryGroupId = searchParams.get("group_id");
+  const satisfaction = searchParams.get("satisfaction");
   console.log("queryGroupId: ", queryGroupId);
 
   //Fetch videos from supabase/cloudinary
@@ -148,7 +149,9 @@ export default function Home() {
               </div>
             ))}
         </div>
-        {queryGroupId && <FeedbackForm groupId={queryGroupId} />}
+        {queryGroupId && !satisfaction && (
+          <FeedbackForm groupId={queryGroupId} />
+        )}
       </main>
     </div>
   );
