@@ -30,13 +30,17 @@
   font-family: "Outfit", sans-serif;
 }
 
-.videoDetailsLeft,
 .videoDetailsRight {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  gap: 4px; /* This controls the space between the <p> tags */
+}
+.videoDetailsleft {
   display: flex;
   flex-direction: column;
   gap: 4px; /* This controls the space between the <p> tags */
 }
-
 .gridContainer {
   display: grid;
   grid-template-columns: repeat(1, 1fr);
