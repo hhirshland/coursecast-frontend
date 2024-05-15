@@ -45,7 +45,7 @@
   display: grid;
   grid-template-columns: repeat(1, 1fr);
   gap: 10px; /*Adjust the spacing as needed */
-  padding: 20px 20px; /* 20px padding on the left and right */
+  padding: 10px 10px; /* 20px padding on the left and right */
   background-color: #f2f2f7;
 }
 
