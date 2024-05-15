@@ -125,49 +125,27 @@ export default function Home() {
       </div>
       <main>
         <div className={styles.gridContainer}>
-          {clips.map((clip, index) => (
-            <div key={index}>
-              <div className={styles.videoDetails}>
-                <div className={styles.videoDetailsLeft}>
-                  <p>
-                    <b>Group {clip.group_id}</b>
-                  </p>
-                  <p>Stanford Hole 8</p>
+          {clips
+            .filter((clip) => !queryGroupId || clip.group_id === queryGroupId)
+            .map((clip, index) => (
+              <div key={index}>
+                <div className={styles.videoDetails}>
+                  <div className={styles.videoDetailsLeft}>
+                    <p>
+                      <b>Group {clip.group_id}</b>
+                    </p>
+                    <p>Stanford Hole 8</p>
+                  </div>
+                  <div className={styles.videoDetailsRight}>
+                    <p>{formatDate(clip.created_at)}</p>
+                    <p>{formatTime(clip.created_at)}</p>
+                  </div>
                 </div>
-                <div className={styles.videoDetailsRight}>
-                  <p>{formatDate(clip.created_at)}</p>
-                  <p>{formatTime(clip.created_at)}</p>
-                </div>
+                <video className={styles.videoItem} controls key={clip.id}>
+                  <source src={clip.url} type="video/mp4" />
+                </video>
               </div>
-              <video className={styles.videoItem} controls key={clip.id}>
-                <source src={clip.url} type="video/mp4" />
-              </video>
-            </div>
-          ))}
-
-          {/* videos.map((video, index) => (
-            <div key={index}>
-              <div className={styles.videoDetails}>
-                <div className={styles.videoDetailsLeft}>
-                  <p>
-                    <b>Your Group</b>
-                  </p>
-                  <p>Stanford Hole 8</p>
-                </div>
-                <div className={styles.videoDetailsRight}>
-                  <p>April 23rd</p>
-                  <p>4:38 pm</p>
-                </div>
-              </div>
-              <AdvancedVideo
-                className={styles.videoItem}
-                cldVid={video.video}
-                //cldPoster="auto"
-                controls
-                key={ index }
-              />
-            </div>
-          ))*/}
+            ))}
         </div>
       </main>
     </div>
