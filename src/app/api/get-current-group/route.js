@@ -10,14 +10,16 @@ export async function GET(request) {
   let { data: groups, error } = await supabase
     .from("groups")
     .select("*")
-    .order("group_id", { ascending: false })
-    .limit(1);
+    .order("group_id", { ascending: false });
+  //.limit(1);
   if (error) {
     return Response.json({
       message: "Error getting groups",
     });
   }
+  console.log("groups: ", groups);
   let groupId = groups[0].group_id;
+  console.log("groupId: ", groupId);
   if (groups[0].clip_1_generated == true) {
     groupId = groupId + 1;
   }
