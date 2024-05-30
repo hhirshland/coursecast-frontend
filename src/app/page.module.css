@@ -72,3 +72,26 @@
   margin-bottom: 24px;
   color: #737376;
 }
+
+/*Feedback Form */
+.feedbackForm {
+  padding-top: 40px;
+  padding-bottom: 40px;
+  background-color: #e6e6eb;
+}
+
+.feedbackForm h2 {
+  text-align: center;
+  color: #094300;
+  font-family: "Outfit", sans-serif;
+  font-size: 22pt;
+  font-weight: bold;
+}
+
+.feedbackForm p {
+  color: #737376;
+  font-size: 18pt;
+  font-family: "Outfit", sans-serif;
+  font-weight: light;
+  text-align: center;
+}

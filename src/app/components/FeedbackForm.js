@@ -4,9 +4,11 @@ import styles from "../page.module.css";
 const FeedbackForm = ({ groupId }) => {
   return (
     <div className={styles.feedbackForm}>
-      <h2>Help us improve!</h2>
+      <h2>Help us improve</h2>
       <form action="https://submit-form.com/7NT2goH4c">
-        <div>Rate your video!</div>
+        <div>
+          <p>Please rate your beta experience:</p>
+        </div>
         <input
           type="hidden"
           name="_redirect"
