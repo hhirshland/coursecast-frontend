@@ -54,15 +54,32 @@ async function fetchRawUrls() {
   if (error) console.log(error);
   return clips;
 }
-
+/*
 const formatDate = (dateString) => {
   const date = new Date(dateString);
   return date.toLocaleDateString(); // formats date as "MM/DD/YYYY" in the U.S.
 };
+*/
+const formatDate = (dateString) => {
+  const date = new Date(dateString);
+  const options = { month: "short", day: "numeric" };
+  const formattedDate = date.toLocaleDateString("en-US", options);
 
+  const day = date.getDate();
+  let daySuffix = "th";
+  if (day % 10 === 1 && day !== 11) {
+    daySuffix = "st";
+  } else if (day % 10 === 2 && day !== 12) {
+    daySuffix = "nd";
+  } else if (day % 10 === 3 && day !== 13) {
+    daySuffix = "rd";
+  }
+
+  return `${formattedDate.split(" ")[0]} ${day}${daySuffix}`;
+};
 const formatTime = (dateString) => {
   const date = new Date(dateString);
-  return date.toLocaleTimeString(); // formats time as "HH:MM:SS AM/PM" in the U.S.
+  return date.toLocaleTimeString([], { hour: "numeric", minute: "2-digit" }); // formats time as "H:MM AM/PM"
 };
 
 export default function Home() {
@@ -105,7 +122,14 @@ export default function Home() {
             .filter((clip) => !queryGroupId || clip.group_id === queryGroupId)
             .map((clip, index) => (
               <div key={index} className={styles.videoModule}>
-                <div className={styles.videoDetails}>
+                <div className={styles.galleryHeader}>
+                  <h2>Your Group's Gallery</h2>
+                  <p>
+                    Stanford GC - {formatDate(clip.created_at)},{" "}
+                    {formatTime(clip.created_at)}
+                  </p>
+                </div>
+                {/*<div className={styles.videoDetails}>
                   <div className={styles.videoDetailsLeft}>
                     <p>
                       <b>Group {clip.group_id}</b>
@@ -116,7 +140,7 @@ export default function Home() {
                     <p>{formatDate(clip.created_at)}</p>
                     <p>{formatTime(clip.created_at)}</p>
                   </div>
-                </div>
+                </div>*/}
                 <video className={styles.videoItem} controls key={clip.id}>
                   <source src={clip.url} type="video/mp4" />
                 </video>

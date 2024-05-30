@@ -20,6 +20,33 @@
   padding: 0;
 }
 
+.galleryHeader {
+  margin-bottom: 10px;
+}
+
+.galleryHeader h2 {
+  font-size: 26pt;
+  font-style: italic;
+  font-weight: bold;
+  font-family: "Barlow Condensed", "Outfit", sans-serif;
+  color: #094300;
+  text-align: center;
+  margin: 0;
+  padding: 0;
+}
+
+.galleryHeader p {
+  font-family: "Outfit", sans-serif;
+  font-size: 18pt;
+  font-weight: light;
+  text-align: center;
+  margin-top: 24px;
+  margin-bottom: 24px;
+  color: #737376;
+  margin: 0;
+  padding: 0;
+}
+
 .videoDetails {
   color: #8a8a8e;
   display: flex;
@@ -54,6 +81,9 @@
     padding-right: 100px;
     gap: 20px;
   }
+  .galleryHeader {
+    margin-bottom: 20px;
+  }
 }
 
 .videoItem {
@@ -78,8 +108,17 @@
   padding-top: 40px;
   padding-bottom: 40px;
   background-color: #e6e6eb;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
 }
 
+.feedbackForm form {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  align-items: center;
+}
 .feedbackForm h2 {
   text-align: center;
   color: #094300;
@@ -94,4 +133,42 @@
   font-family: "Outfit", sans-serif;
   font-weight: light;
   text-align: center;
+}
+
+.stars {
+  display: flex;
+  justify-content: center;
+  gap: 10px;
+}
+
+.stars label {
+  font-size: 2em; /* Adjust size as needed */
+  cursor: pointer;
+  transition: transform 0.2s;
+}
+/* Style for selected emoji */
+.feedbackForm input[type="radio"]:checked + label {
+  transform: scale(1.2);
+}
+
+.feedbackForm input[type="radio"] {
+  display: none;
+}
+
+.feedbackForm input[type="text"] {
+  width: 400px;
+  border: #c2c2c4, 1px, solid;
+}
+
+.feedbackForm button {
+  border-radius: 8px;
+  font-size: 18px;
+  color: #ffffff;
+  background-color: #094300;
+}
+
+.feedbackForm button:disabled {
+  color: #094300;
+  background-color: transparent;
+  border: 1px solid #094300;
 }
