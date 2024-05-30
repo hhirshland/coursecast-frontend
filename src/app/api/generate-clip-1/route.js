@@ -56,7 +56,8 @@ async function generateClip(groupId) {
 function generateCloudinaryURL(baseURL, uploads) {
   let url = `${baseURL}/video/upload/`;
   let logoOverlay =
-    "l_psibwxeuh2c5wnnh8o4j/fl_layer_apply,g_north_east,x_50,y_50/";
+    //"l_psibwxeuh2c5wnnh8o4j/fl_layer_apply,g_north_east,x_50,y_50/";
+    "l_beta_overlay/fl_layer_apply,g_north_east,x_0,y_0/";
 
   let music = "l_audio:h1lwbct12rylznmjsv10/fl_layer_apply/";
 
