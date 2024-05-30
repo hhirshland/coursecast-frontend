@@ -147,7 +147,12 @@ export default function Home() {
                 </video>
               </div>
             ))}
+          <div className={styles.thatsAll}>
+            <p>That's all for now!</p>
+            <p>Putt coverage coming soon.</p>
+          </div>
         </div>
+
         {queryGroupId && !satisfaction && (
           <FeedbackForm groupId={queryGroupId} />
         )}

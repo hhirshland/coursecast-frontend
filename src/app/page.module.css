@@ -45,11 +45,30 @@
   display: grid;
   grid-template-columns: repeat(1, 1fr);
   gap: 10px; /*Adjust the spacing as needed */
-  padding: 10px 10px; /* 20px padding on the left and right */
+  padding: 10px; /* 20px padding on the left and right */
   background-color: #f2f2f7;
+}
+@media (min-width: 768px) {
+  .gridContainer {
+    padding-left: 100px; /* Desktop padding */
+    padding-right: 100px;
+    gap: 20px;
+  }
 }
 
 .videoItem {
+  border-radius: 8pt;
   width: 100%;
   height: auto; /* Adjust height as needed */
+}
+
+/* Thats all for now module */
+.thatsAll p {
+  font-family: "Outfit", sans-serif;
+  font-size: 18pt;
+  font-weight: light;
+  text-align: center;
+  margin-top: 24px;
+  margin-bottom: 24px;
+  color: #737376;
 }
