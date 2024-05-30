@@ -33,41 +33,6 @@ const supabase = createClient(
 );
 
 //This function fetches videos from supabase and cloudinary, filtering based on the group_id parameter in the url (if present)
-async function fetchVideos(queryGroupId) {
-  console.log("fetchVideos called");
-  let { data: clips, error } = await supabase.from("raw_uploads").select("*");
-  console.log("clips: ", clips);
-  if (error) console.log(error);
-
-  let videosArray = [];
-
-  //For every clip public_id stored in supabase, fetch the video from cloudinary and add it to the videosArray
-  for (const video of clips) {
-    let vid = cld
-      .video(video.public_id)
-      //.resize(fill().width(1080).height(720)) // Example of higher resolution
-      .quality("auto:good"); // Adjust quality settings
-    //If the group_id parameter is present in the url, only add videos with that group_id to the videosArray
-    if (queryGroupId && queryGroupId == video.group_id) {
-      videosArray.push({
-        video: vid,
-        group: video.group_id,
-        videoId: video.public_id,
-      });
-    }
-    //If group_id is not present in the url, add all videos to the videosArray
-    else if (!queryGroupId) {
-      videosArray.push({
-        video: vid,
-        group: video.group_id,
-        videoId: video.public_id,
-      });
-    }
-  }
-  return videosArray;
-}
-
-//This function fetches videos from supabase and cloudinary, filtering based on the group_id parameter in the url (if present)
 async function fetchVideoUrls() {
   console.log("fetchVideos called");
   let { data: clips, error } = await supabase
@@ -75,6 +40,17 @@ async function fetchVideoUrls() {
     .select("*")
     .order("created_at", { ascending: false });
   console.log("clips: ", clips);
+  if (error) console.log(error);
+  return clips;
+}
+
+async function fetchRawUrls() {
+  console.log("fetchVideos called");
+  let { data: clips, error } = await supabase
+    .from("raw_uploads")
+    .select("*")
+    .order("created_at", { ascending: false });
+  console.log("raws: ", clips);
   if (error) console.log(error);
   return clips;
 }
@@ -90,10 +66,10 @@ const formatTime = (dateString) => {
 };
 
 export default function Home() {
-  const [videos, setVideos] = useState([]);
   const searchParams = useSearchParams();
   console.log("searchParams: ", searchParams);
   const [clips, setClips] = useState([]);
+  const [raws, setRaws] = useState([]);
   //console.log(searchParams);
   //console.log(searchParams.get("group_id"));
   const queryGroupId = searchParams.get("group_id");
@@ -104,15 +80,13 @@ export default function Home() {
   useEffect(() => {
     console.log("useEffect called");
     async function loadVideos() {
-      const videosArray = await fetchVideos(queryGroupId);
-      setVideos(videosArray);
       const clipsJson = await fetchVideoUrls();
       setClips(clipsJson);
+      const rawsJson = await fetchRawUrls();
+      setRaws(rawsJson);
     }
     loadVideos();
   }, []); // The empty array ensures this effect runs only once on mount
-
-  const myVideo = cld.video("docs/walking_talking");
 
   return (
     <div>
@@ -145,6 +119,31 @@ export default function Home() {
                 </div>
                 <video className={styles.videoItem} controls key={clip.id}>
                   <source src={clip.url} type="video/mp4" />
+                </video>
+              </div>
+            ))}
+          {raws
+            .filter((clip) => !queryGroupId || clip.group_id === queryGroupId)
+            .map((clip, index) => (
+              <div key={index} className={styles.videoModule}>
+                <div className={styles.videoDetails}>
+                  <div className={styles.videoDetailsLeft}>
+                    {/*<p>
+                      <b>Group {clip.group_id}</b>
+                    </p>
+            <p>Stanford Hole 8</p>*/}
+                    <p>Player {index + 1}</p>
+                  </div>
+                  {/*<div className={styles.videoDetailsRight}>
+                    <p>{formatDate(clip.created_at)}</p>
+                    <p>{formatTime(clip.created_at)}</p>
+            </div>*/}
+                </div>
+                <video className={styles.videoItem} controls key={clip.id}>
+                  <source
+                    src={`https://res.cloudinary.com/dnuabur2f/video/upload/${clip.public_id}.mp4`}
+                    type="video/mp4"
+                  />
                 </video>
               </div>
             ))}
