@@ -172,3 +172,12 @@
   background-color: transparent;
   border: 1px solid #094300;
 }
+
+.shareButton {
+  margin-right: 20px;
+  font-size: 18px;
+  color: #ffffff;
+  background-color: #094300;
+  border-radius: 8px;
+  border: #094300, 1px, solid;
+}

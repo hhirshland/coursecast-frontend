@@ -3,19 +3,9 @@ import React, { useState, useEffect } from "react";
 import { useSearchParams } from "next/navigation";
 import Image from "next/image";
 import styles from "../page.module.css";
-import { CldVideoPlayer } from "next-cloudinary";
-import Gallery from "../components/Gallery.js";
+
 import "next-cloudinary/dist/cld-video-player.css";
 import { Cloudinary } from "@cloudinary/url-gen";
-
-import { AdvancedImage } from "@cloudinary/react";
-import { AdvancedVideo } from "@cloudinary/react";
-// Import required actions and qualifiers.
-import { fill } from "@cloudinary/url-gen/actions/resize";
-import { byRadius } from "@cloudinary/url-gen/actions/roundCorners";
-import { FocusOn } from "@cloudinary/url-gen/qualifiers/focusOn";
-import { Gravity } from "@cloudinary/url-gen/qualifiers";
-import { AutoFocus } from "@cloudinary/url-gen/qualifiers/autoFocus";
 import FeedbackForm from "../components/FeedbackForm";
 
 //Supabase initialization
@@ -82,6 +72,34 @@ const formatTime = (dateString) => {
   return date.toLocaleTimeString([], { hour: "numeric", minute: "2-digit" }); // formats time as "H:MM AM/PM"
 };
 
+const ShareButton = () => {
+  const handleShare = async () => {
+    if (navigator.share) {
+      try {
+        await navigator.share({
+          title: "CourseCast",
+          text: "Check out my golf swing!",
+          url: window.location.href,
+        });
+        console.log("Data was shared successfully");
+      } catch (err) {
+        console.error("Share failed:", err.message);
+      }
+    } else {
+      console.log("Web Share API not supported");
+      navigator.clipboard.writeText(window.location.href).then(() => {
+        alert("Link copied to clipboard");
+      });
+    }
+  };
+
+  return (
+    <button onClick={handleShare} className={styles.shareButton}>
+      Share
+    </button>
+  );
+};
+
 export default function Home() {
   const searchParams = useSearchParams();
   console.log("searchParams: ", searchParams);
@@ -115,6 +133,7 @@ export default function Home() {
           alt="logo"
           className={styles.logo}
         ></Image>
+        <ShareButton className={styles.shareButton} />
       </div>
       <main>
         <div className={styles.gridContainer}>

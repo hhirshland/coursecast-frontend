@@ -1,3 +1,15 @@
+/* styles/globals.css */
+@font-face {
+  font-family: "Outfit";
+  src: ("/fonts/Outfit-VariableFont_wght.ttf") format("truetype");
+  font-weight: normal, bold, light, extralight, medium, semibold, black;
+  font-style: normal;
+}
+
+body {
+  font-family: "YourCustomFont", sans-serif;
+}
+
 body {
   background-color: white;
 }
